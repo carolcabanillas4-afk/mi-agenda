@@ -50,6 +50,7 @@ button{cursor:pointer}
 .tbtns{display:flex;gap:8px;flex-wrap:wrap}
 .tb{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 14px;font-weight:700;font-size:13.5px;display:inline-flex;gap:6px;align-items:center;box-shadow:0 1px 2px rgba(0,0,0,.04)}
 .tb:hover{border-color:var(--rose)}
+.tb[hidden]{display:none}
 .tb[aria-pressed="true"]{background:var(--rose-deep);border-color:var(--rose-deep);color:var(--surface)}
 
 /* stage + book */
@@ -1160,7 +1161,7 @@ $("#impFile").addEventListener("change", async e => {
 });
 let installEvt = null;
 addEventListener("beforeinstallprompt", e => { e.preventDefault(); installEvt = e; $("#bInstall").hidden = false; });
-$("#bInstall").addEventListener("click", async () => { if (!installEvt) return; installEvt.prompt(); await installEvt.userChoice; installEvt = null; $("#bInstall").hidden = true; });
+$("#bInstall").addEventListener("click", async () => { if (!installEvt){ toast("Usa el menú ⋮ de Chrome → «Transmitir, guardar y compartir» → «Instalar página como app».", true); return; } installEvt.prompt(); await installEvt.userChoice; installEvt = null; $("#bInstall").hidden = true; });
 addEventListener("appinstalled", () => { $("#bInstall").hidden = true; toast("¡Agenda instalada! 🌷"); });
 if ("serviceWorker" in navigator && location.protocol.startsWith("http")) navigator.serviceWorker.register("sw.js").catch(()=>{});
 
